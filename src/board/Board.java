@@ -13,7 +13,7 @@ public class Board {
     private int[][] gameBoard;
 
 
-    public void setGame() {
+    public void setGameBoard() {
         System.out.println("Please provide board size");
         Scanner scan = new Scanner(System.in);
         boolean flag = true;
@@ -26,11 +26,12 @@ public class Board {
                 System.out.println("Invalid value");
             }
         }
-
-
-        this.gameBoard = new int[size][size];
+        this.gameBoard = new int[size*2][size*2];
+    }
+    public void printBoard(Board board){
 
     }
 
-
+//    tu chyba powinnop byc tworzenie poionków
+//    przypisanie kazdemu polu planszy jego  koordynat
 }
