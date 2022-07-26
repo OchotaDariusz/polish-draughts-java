@@ -1,10 +1,18 @@
+package pawn;
 public class Pawn {
 
-    private String color;
     private boolean isCrowned;
     private int posX;
     private int posY;
+
+    private int player_id;
     Coordinates position = new Coordinates(posX, posY);
+
+    public Pawn(int posX, int posY, int player_id) {
+        this.posX = posX;
+        this.posY = posY;
+        this.player_id = player_id;
+    }
 
     public void setPosX(int posX) {
         this.posX = posX;
@@ -16,14 +24,21 @@ public class Pawn {
         this.posY = posY;
         position.setY(posY);
     }
+
+    public void getPlayer()
+    {
+
+    }
+
+    public Color getColor() {
+        if (player_id == 0)
+            return Color.WHITE;
+        return Color.BLACK;
+    }
+
     public static void moveValidation(int posX, int posY){
 
     }
 
-
-
-    public static String getColor() {
-        return "1";
-    }
 
 }

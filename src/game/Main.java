@@ -27,6 +27,7 @@ public class Main {
         System.out.println(array);
         Board board = new Board();
         board.setGameBoard();
+        board.displayBoard();
 
     }
 }

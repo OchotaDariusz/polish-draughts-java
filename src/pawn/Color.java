@@ -1,3 +1,5 @@
- enum Color {
+package pawn;
+
+public enum Color {
     BLACK,WHITE;
 }
