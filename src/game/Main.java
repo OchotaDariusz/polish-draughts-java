@@ -1,13 +1,15 @@
-import java.lang.reflect.Array;
+package game;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Scanner;
+import board.Board;
 
 public class Main {
 
     public static void main(String[] args) {
         ArrayList array = new ArrayList<>();
         LinkedList list = new LinkedList<>();
+        // add
         array.add(2);
         array.add(2);
         array.add(2);
