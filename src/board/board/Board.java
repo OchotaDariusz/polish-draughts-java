@@ -113,6 +113,10 @@ public class Board {
         return cords;
     }
 
+    static boolean checkForEnemyPawn(Pawn[][] gameBoard, int[] moveCords, int playerID) {
+        return gameBoard[moveCords[0]][moveCords[1]].getPlayer() != playerID;
+    }
+
     public static void movePawn(int playerID, Pawn[][] gameBoard){
         int[] pawnCords = getUserInput("Specify pawn");
         int[] moveCords = getUserInput("Specify position");
@@ -121,7 +125,13 @@ public class Board {
         if (canMove) {
             System.out.println("You can move");
         } else {
-            System.out.println("You can't move");
+            if (checkForEnemyPawn(gameBoard, moveCords, playerID)) {
+                // capture the pawn
+                System.out.println("Capture the Pawn"); // TODO
+            } else {
+                System.out.println("You can't move here.");
+                movePawn(playerID, gameBoard);
+            }
         }
     }
 
