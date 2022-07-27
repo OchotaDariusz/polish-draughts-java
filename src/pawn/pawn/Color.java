@@ -1,5 +1,6 @@
 package pawn;
 
 public enum Color {
-    BLACK,WHITE;
+    BLACK,
+    WHITE
 }

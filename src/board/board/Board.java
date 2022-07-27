@@ -4,6 +4,8 @@ import java.util.Scanner;
 import pawn.Color;
 import pawn.Pawn;
 
+import static java.lang.Integer.parseInt;
+
 public class Board {
     public int getSize() {
         return size;
@@ -88,15 +90,28 @@ public class Board {
             }
             System.out.println("|");
         }
-    }
-
-    public void printBoard(Board board){
 
     }
 
+    public static void movePawn(int playerID){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Specify pawn");
+        String pawnPos = scan.next().toUpperCase();
+        char posXChar = pawnPos.charAt(0);
+        int posXInt = posXChar - 65;
+        int posY = parseInt(pawnPos.substring(1))-1;
+        System.out.println(posXChar);
+        System.out.println(posXInt);
+        System.out.println(posY);
 
 
-//    tu chyba powinnop byc tworzenie poionków
 
-//    przypisanie kazdemu polu planszy jego  koordynat
+
+
+
+    }
+
+
+
+
 }
