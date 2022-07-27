@@ -8,15 +8,17 @@ import pawn.Pawn;
 import static java.lang.Integer.parseInt;
 
 public class Board {
+    private int size;
+
     public int getSize() {
-        return size;
+        return this.size;
     }
 
     public void setSize(int size) {
         this.size = size;
     }
 
-    private int size;
+
 
     private Pawn[][] gameBoard;
 
@@ -33,6 +35,7 @@ public class Board {
             size = scan.nextInt();
             if (10 <= size && size <= 20) {
                 flag = false;
+                setSize(size);
             } else {
                 System.out.println("Invalid value");
             }
@@ -97,14 +100,24 @@ public class Board {
 
     }
 
-    static int[] getUserInput(String info) {
+    static int[] getUserInput(String info, int size) {
+
+
         Scanner scan = new Scanner(System.in);
         System.out.println(info);
         String pos = scan.next().toUpperCase();
         scan.nextLine();
         char posXChar = pos.charAt(0);
         int posXInt = posXChar - 65;
+        if (posXInt >= size) {
+            System.out.println("invalid value");
+            getUserInput(info, size);
+        }
         int posY = parseInt(pos.substring(1));
+        if (posY >= size) {
+            System.out.println("invalid value");
+            getUserInput(info, size);
+        }
         int[] cords = new int[2];
         cords[1] = posXInt;
         cords[0] = posY;
@@ -144,11 +157,15 @@ public class Board {
                 System.out.println("You can't move here.");
                 movePawn(playerID, gameBoard);
             }
+
+
+
         }
 
     }
 
     public Integer checkForWinner() {
+
         Integer currentWinner = null;
         for (int y = 0; y < gameBoard.length; y++) {
             for (int x = 0; x < gameBoard[0].length; x++) {
