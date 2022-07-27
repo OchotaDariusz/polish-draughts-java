@@ -40,5 +40,14 @@ public class Pawn {
 
     }
 
-
+    @Override
+    public String toString() {
+        return "Pawn{" +
+                "isCrowned=" + isCrowned +
+                ", posX=" + posX +
+                ", posY=" + posY +
+                ", player_id=" + player_id +
+                ", position=" + position +
+                '}';
+    }
 }
