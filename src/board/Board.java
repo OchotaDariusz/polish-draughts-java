@@ -35,7 +35,7 @@ public class Board {
         Pawn[][] gameboard = new Pawn[size][size];
 
         // set pawns for player 0
-        for (int y = 0; y < 2; y++) {
+        for (int y = 0; y < 4; y++) {
             for (int x = 0; x < gameboard[0].length; x++) {
                 if ((x + y) % 2 == 0) { // pawn on even/odd positions
                     gameboard[y][x] = new Pawn(x, y, 0);
@@ -44,8 +44,8 @@ public class Board {
         }
 
         // set pawns for player 1
-        int y_offset = gameboard.length - 2;
-        for (int y = 0; y < 2; y++) {
+        int y_offset = gameboard.length - 4;
+        for (int y = 0; y < 4; y++) {
             for (int x = 0; x < gameboard[0].length; x++) {
                 if ((1+x + y) % 2 == 0) { //shifting +1 spot to the right to mirrow upper pawn rows
                     gameboard[y + y_offset][x] = new Pawn(x, y + y_offset, 1);
@@ -58,11 +58,14 @@ public class Board {
     public void displayBoard()
     {
         // display header
+        System.out.print("   ");
         for (int x = 0; x < gameBoard[0].length; x++) {
             char col_symbol = (char)('A'+x);
             System.out.print("  "+col_symbol+" ");
         }
         System.out.println("");
+
+        System.out.print("   ");
         for (int x = 0; x < gameBoard[0].length; x++) {
             System.out.print("----");
         }
@@ -70,6 +73,11 @@ public class Board {
 
 
         for (int y = 0; y < gameBoard.length; y++) {
+
+            if (y <10)
+                System.out.print(" ");
+            System.out.print(y + " ");
+
             for (int x = 0; x < gameBoard[0].length; x++) {
                 String pawn_symbol = " ";
                 if (gameBoard[y][x] != null && gameBoard[y][x].getColor() == Color.BLACK)
