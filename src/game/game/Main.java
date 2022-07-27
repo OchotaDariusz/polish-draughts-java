@@ -26,11 +26,13 @@ public class Main {
 
         Board board = new Board();
         board.setGameBoard();
-        board.displayBoard();
+
 
         while (isRunning()) {
+            board.displayBoard();
             System.out.println("Player " + (getPlayerId() + 1) + " turn.");
             Board.movePawn(getPlayerId(), board.getGameBoard());
+
             // check for win
             int player = (getPlayerId() == 0) ? 1 : 0;
             setPlayerId(player);

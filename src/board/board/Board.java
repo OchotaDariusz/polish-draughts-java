@@ -1,4 +1,5 @@
 package board;
+
 import java.util.Scanner;
 
 import pawn.Color;
@@ -79,7 +80,7 @@ public class Board {
 
         for (int y = 0; y < gameBoard.length; y++) {
 
-            if (y <10)
+            if (y < 10)
                 System.out.print(" ");
             System.out.print(y + " ");
 
@@ -103,25 +104,39 @@ public class Board {
         scan.nextLine();
         char posXChar = pos.charAt(0);
         int posXInt = posXChar - 65;
-        int posY = parseInt(pos.substring(1))-1;
-        System.out.println(posXChar);
-        System.out.println(posXInt);
-        System.out.println(posY);
+        int posY = parseInt(pos.substring(1));
         int[] cords = new int[2];
-        cords[0] = posXInt;
-        cords[1] = posY;
+        cords[1] = posXInt;
+        cords[0] = posY;
         return cords;
     }
 
-    public static void movePawn(int playerID, Pawn[][] gameBoard){
+    public static void movePawn(int playerID, Pawn[][] gameBoard) {
         int[] pawnCords = getUserInput("Specify pawn");
         int[] moveCords = getUserInput("Specify position");
-
+        boolean flagMove = true;
+//        0 to bialy
+        while (flagMove) {
+            if ((Math.abs(pawnCords[0] - moveCords[0]) != 1) || ((Math.abs(pawnCords[1] - moveCords[1]) != 1))) {
+                System.out.println("invalid move position, try again");
+                moveCords = getUserInput("Specify position");
+            } else {
+                flagMove = false;
+            }
+        }
+        System.out.println(pawnCords[0]);
+        System.out.println(pawnCords[1]);
+        System.out.println(moveCords[0]);
+        System.out.println(moveCords[1]);
         boolean canMove = gameBoard[pawnCords[0]][pawnCords[1]].tryToMakeMove(gameBoard, moveCords[0], moveCords[1], playerID);
         if (canMove) {
-            System.out.println("You can move");
+            gameBoard[moveCords[0]][moveCords[1]]=gameBoard[pawnCords[0]][pawnCords[1]];
+            gameBoard[pawnCords[0]][pawnCords[1]]=null;
         } else {
             System.out.println("You can't move");
+            movePawn(playerID, gameBoard);
         }
+
     }
+
 }

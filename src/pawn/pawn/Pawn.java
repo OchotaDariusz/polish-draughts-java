@@ -40,7 +40,16 @@ public class Pawn {
     }
 
     public boolean tryToMakeMove(Pawn[][] gameBoard, int posX, int posY, int playerId) {
-        return gameBoard[posX][posY] == null && playerId == getPlayer();
+        System.out.println(playerId);
+        System.out.println(getPlayer());
+        System.out.println(gameBoard[posX][posY]);
+        System.out.println(posX);
+        System.out.println(posY);
+        if(gameBoard[posX][posY] == null && playerId == getPlayer()){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     @Override
