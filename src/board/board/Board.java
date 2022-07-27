@@ -124,4 +124,20 @@ public class Board {
             System.out.println("You can't move");
         }
     }
+
+    public Integer checkForWinner() {
+        Integer currentWinner = null;
+        for (int y = 0; y < gameBoard.length; y++) {
+            for (int x = 0; x < gameBoard[0].length; x++) {
+                if (gameBoard[x][y] == null)
+                    continue;
+                if (currentWinner == null)
+                    currentWinner = gameBoard[x][y].getPlayer();
+                if (currentWinner != gameBoard[x][y].getPlayer())
+                    return null;
+            }
+        }
+        return currentWinner;
+    }
+
 }
