@@ -30,7 +30,7 @@ public class Main {
 
         while (isRunning()) {
             System.out.println("Player " + (getPlayerId() + 1) + " turn.");
-            // move pawn
+            Board.movePawn(getPlayerId());
             // check for win
             int player = (getPlayerId() == 0) ? 1 : 0;
             setPlayerId(player);

@@ -82,9 +82,7 @@ public class Board {
             }
             System.out.println("|");
         }
-        System.out.println(gameBoard[0][0]);
-        System.out.println(gameBoard[9][0]);
-        movePawn(1);
+
     }
 
     public static void movePawn(int playerID){
