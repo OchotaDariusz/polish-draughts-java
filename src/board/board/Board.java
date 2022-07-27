@@ -85,11 +85,20 @@ public class Board {
 
             for (int x = 0; x < gameBoard[0].length; x++) {
                 String pawn_symbol = " ";
+
                 if (gameBoard[y][x] != null && gameBoard[y][x].getColor() == Color.BLACK)
                     pawn_symbol = "B";
                 if (gameBoard[y][x] != null && gameBoard[y][x].getColor() == Color.WHITE)
                     pawn_symbol = "W";
-                System.out.print("| " + pawn_symbol + " ");
+                System.out.print("|");
+
+                if ( (x+y) %2 == 0)
+                {
+                    System.out.print(Console.Color.BLACK);
+                    System.out.print(Console.Color.WHITE_BACKGROUND);
+                }
+                System.out.print(" "+ pawn_symbol + " ");
+                System.out.print(Console.Color.RESET);
             }
             System.out.println("|");
         }
