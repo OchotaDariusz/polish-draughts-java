@@ -54,7 +54,7 @@ public class Board {
         int y_offset = gameBoard.length - 4;
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < gameBoard.length; x++) {
-                if ((1 + x + y) % 2 == 0) { //shifting +1 spot to the right to mirrow upper pawn rows
+                if ((x + y) % 2 == 0) { //shifting +1 spot to the right to mirrow upper pawn rows
                     gameBoard[y + y_offset][x] = new Pawn(x, y + y_offset, 1);
                 }
             }
