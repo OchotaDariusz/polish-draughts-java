@@ -12,6 +12,8 @@ public class Pawn {
         this.posX = posX;
         this.posY = posY;
         this.player_id = player_id;
+        position.setX(posX);
+        position.setY(posY);
     }
 
     public void setPosX(int posX) {
