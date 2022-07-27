@@ -1,17 +1,19 @@
 package pawn;
+
 public class Pawn {
 
     private boolean isCrowned;
     private int posX;
     private int posY;
 
-    private int player_id;
+    private int playerId;
+
     Coordinates position = new Coordinates(posX, posY);
 
-    public Pawn(int posX, int posY, int player_id) {
+    public Pawn(int posX, int posY, int playerId) {
         this.posX = posX;
         this.posY = posY;
-        this.player_id = player_id;
+        this.playerId = playerId;
         position.setX(posX);
         position.setY(posY);
     }
@@ -27,19 +29,18 @@ public class Pawn {
         position.setY(posY);
     }
 
-    public void getPlayer()
-    {
-
+    public int getPlayer() {
+        return this.playerId;
     }
 
     public Color getColor() {
-        if (player_id == 0)
+        if (playerId == 0)
             return Color.WHITE;
         return Color.BLACK;
     }
 
-    public static void moveValidation(int posX, int posY){
-
+    public boolean tryToMakeMove(Pawn[][] gameBoard, int posX, int posY, int playerId) {
+        return gameBoard[posX][posY] == null && playerId == getPlayer();
     }
 
     @Override
@@ -48,7 +49,7 @@ public class Pawn {
                 "isCrowned=" + isCrowned +
                 ", posX=" + posX +
                 ", posY=" + posY +
-                ", player_id=" + player_id +
+                ", player_id=" + playerId +
                 ", position=" + position +
                 '}';
     }

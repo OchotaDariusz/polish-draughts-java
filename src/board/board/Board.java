@@ -16,8 +16,12 @@ public class Board {
     }
 
     private int size;
+
     private Pawn[][] gameBoard;
 
+    public Pawn[][] getGameBoard() {
+        return gameBoard;
+    }
 
     public void setGameBoard() {
         System.out.println("Please provide board size");
@@ -34,36 +38,35 @@ public class Board {
         }
 
         // initialize the board
-        Pawn[][] gameboard = new Pawn[size][size];
+        Pawn[][] gameBoard = new Pawn[size][size];
 
         // set pawns for player 0
         for (int y = 0; y < 4; y++) {
-            for (int x = 0; x < gameboard[0].length; x++) {
+            for (int x = 0; x < gameBoard.length; x++) {
                 if ((x + y) % 2 == 0) { // pawn on even/odd positions
-                    gameboard[y][x] = new Pawn(x, y, 0);
+                    gameBoard[y][x] = new Pawn(x, y, 0);
                 }
             }
         }
 
         // set pawns for player 1
-        int y_offset = gameboard.length - 4;
+        int y_offset = gameBoard.length - 4;
         for (int y = 0; y < 4; y++) {
-            for (int x = 0; x < gameboard[0].length; x++) {
-                if ((1+x + y) % 2 == 0) { //shifting +1 spot to the right to mirrow upper pawn rows
-                    gameboard[y + y_offset][x] = new Pawn(x, y + y_offset, 1);
+            for (int x = 0; x < gameBoard.length; x++) {
+                if ((1 + x + y) % 2 == 0) { //shifting +1 spot to the right to mirrow upper pawn rows
+                    gameBoard[y + y_offset][x] = new Pawn(x, y + y_offset, 1);
                 }
             }
         }
-        this.gameBoard = gameboard;
+        this.gameBoard = gameBoard;
     }
 
-    public void displayBoard()
-    {
+    public void displayBoard() {
         // display header
         System.out.print("   ");
         for (int x = 0; x < gameBoard[0].length; x++) {
-            char col_symbol = (char)('A'+x);
-            System.out.print("  "+col_symbol+" ");
+            char col_symbol = (char) ('A' + x);
+            System.out.print("  " + col_symbol + " ");
         }
         System.out.println("");
 
@@ -86,32 +89,39 @@ public class Board {
                     pawn_symbol = "B";
                 if (gameBoard[y][x] != null && gameBoard[y][x].getColor() == Color.WHITE)
                     pawn_symbol = "W";
-                System.out.print("| "+pawn_symbol+" ");
+                System.out.print("| " + pawn_symbol + " ");
             }
             System.out.println("|");
         }
 
     }
 
-    public static void movePawn(int playerID){
+    static int[] getUserInput(String info) {
         Scanner scan = new Scanner(System.in);
-        System.out.println("Specify pawn");
-        String pawnPos = scan.next().toUpperCase();
-        char posXChar = pawnPos.charAt(0);
+        System.out.println(info);
+        String pos = scan.next().toUpperCase();
+        scan.nextLine();
+        char posXChar = pos.charAt(0);
         int posXInt = posXChar - 65;
-        int posY = parseInt(pawnPos.substring(1))-1;
+        int posY = parseInt(pos.substring(1))-1;
         System.out.println(posXChar);
         System.out.println(posXInt);
         System.out.println(posY);
-
-
-
-
-
-
+        int[] cords = new int[2];
+        cords[0] = posXInt;
+        cords[1] = posY;
+        return cords;
     }
 
+    public static void movePawn(int playerID, Pawn[][] gameBoard){
+        int[] pawnCords = getUserInput("Specify pawn");
+        int[] moveCords = getUserInput("Specify position");
 
-
-
+        boolean canMove = gameBoard[pawnCords[0]][pawnCords[1]].tryToMakeMove(gameBoard, moveCords[0], moveCords[1], playerID);
+        if (canMove) {
+            System.out.println("You can move");
+        } else {
+            System.out.println("You can't move");
+        }
+    }
 }
