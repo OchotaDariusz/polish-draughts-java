@@ -18,8 +18,6 @@ public class Board {
         this.size = size;
     }
 
-
-
     private Pawn[][] gameBoard;
 
     public Pawn[][] getGameBoard() {
@@ -101,8 +99,6 @@ public class Board {
     }
 
     static int[] getUserInput(String info, int size) {
-
-
         Scanner scan = new Scanner(System.in);
         System.out.println(info);
         String pos = scan.next().toUpperCase();
@@ -128,15 +124,14 @@ public class Board {
         return gameBoard[moveCords[0]][moveCords[1]].getPlayer() != playerID;
     }
 
-    public static void movePawn(int playerID, Pawn[][] gameBoard){
-        int[] pawnCords = getUserInput("Specify pawn");
-        int[] moveCords = getUserInput("Specify position");
+    public static void movePawn(int playerID, Pawn[][] gameBoard, int size) {
+        int[] pawnCords = getUserInput("Specify pawn", size);
+        int[] moveCords = getUserInput("Specify position", size);
         boolean flagMove = true;
-//        0 to bialy
         while (flagMove) {
             if ((Math.abs(pawnCords[0] - moveCords[0]) != 1) || ((Math.abs(pawnCords[1] - moveCords[1]) != 1))) {
                 System.out.println("invalid move position, try again");
-                moveCords = getUserInput("Specify position");
+                moveCords = getUserInput("Specify position", size);
             } else {
                 flagMove = false;
             }
@@ -147,21 +142,17 @@ public class Board {
         System.out.println(moveCords[1]);
         boolean canMove = gameBoard[pawnCords[0]][pawnCords[1]].tryToMakeMove(gameBoard, moveCords[0], moveCords[1], playerID);
         if (canMove) {
-            gameBoard[moveCords[0]][moveCords[1]]=gameBoard[pawnCords[0]][pawnCords[1]];
-            gameBoard[pawnCords[0]][pawnCords[1]]=null;
+            gameBoard[moveCords[0]][moveCords[1]] = gameBoard[pawnCords[0]][pawnCords[1]];
+            gameBoard[pawnCords[0]][pawnCords[1]] = null;
         } else {
             if (checkForEnemyPawn(gameBoard, moveCords, playerID)) {
                 // capture the pawn
                 System.out.println("Capture the Pawn"); // TODO
             } else {
                 System.out.println("You can't move here.");
-                movePawn(playerID, gameBoard);
+                movePawn(playerID, gameBoard, size);
             }
-
-
-
         }
-
     }
 
     public Integer checkForWinner() {

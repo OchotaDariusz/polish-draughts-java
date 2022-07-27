@@ -20,7 +20,6 @@ public class Coordinates {
         this.y = y;
     }
 
-
     public Coordinates(int x, int y) {
         this.x = x;
         this.y = y;

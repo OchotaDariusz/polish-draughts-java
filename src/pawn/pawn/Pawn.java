@@ -45,9 +45,9 @@ public class Pawn {
         System.out.println(gameBoard[posX][posY]);
         System.out.println(posX);
         System.out.println(posY);
-        if(gameBoard[posX][posY] == null && playerId == getPlayer()){
+        if (gameBoard[posX][posY] == null && playerId == getPlayer()) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
