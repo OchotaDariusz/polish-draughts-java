@@ -52,10 +52,11 @@ public class Board {
         }
 
         // set pawns for player 1
+        int pos_fix = gameBoard.length % 2;
         int y_offset = gameBoard.length - 4;
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < gameBoard.length; x++) {
-                if ((x + y + 1) % 2 == 0) { //shifting +1 spot to the right to mirrow upper pawn rows
+                if ((x + y + pos_fix) % 2 == 0) { //shifting +1 spot to the right to mirrow upper pawn rows
                     gameBoard[y + y_offset][x] = new Pawn(x, y + y_offset, 1);
                 }
             }
