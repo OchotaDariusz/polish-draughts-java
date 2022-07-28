@@ -60,8 +60,6 @@ public class Pawn {
     }
 
     public boolean tryToMakeMove(Pawn[][] gameBoard, int posX, int posY, int playerId) {
-        System.out.println("POS X" + posX);
-        System.out.println("POS Y" + posY);
         return gameBoard[posX][posY] == null && playerId == getPlayer();
     }
 
