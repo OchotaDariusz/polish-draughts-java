@@ -41,19 +41,29 @@ public class Pawn {
     public static boolean isMovePossible(Pawn[][] gameBoard, int posX, int posY, int playerId) {
         if (playerId == 0 && gameBoard[posX][posY] != null && gameBoard[posX][posY].getPlayer() == playerId) {
             if (posY > 0 && posY < gameBoard.length - 1) {
-                return gameBoard[posX + 1][posY + 1] == null || gameBoard[posX + 1][posY - 1] == null;
+                return gameBoard[posX + 1][posY + 1] == null
+                        || gameBoard[posX + 1][posY - 1] == null
+                        || gameBoard[posX + 1][posY + 1].getPlayer() != playerId
+                        || gameBoard[posX + 1][posY - 1].getPlayer() != playerId;
             } else if (posY == 0) {
-                return gameBoard[posX + 1][posY + 1] == null;
+                return gameBoard[posX + 1][posY + 1] == null
+                        || gameBoard[posX + 1][posY + 1].getPlayer() != playerId;
             } else {
-                return gameBoard[posX + 1][posY - 1] == null;
+                return gameBoard[posX + 1][posY - 1] == null
+                        || gameBoard[posX + 1][posY - 1].getPlayer() != playerId;
             }
         } else if (gameBoard[posX][posY] != null && gameBoard[posX][posY].getPlayer() == playerId) {
             if (posY > 0 && posY < gameBoard.length - 1) {
-                return gameBoard[posX - 1][posY + 1] == null || gameBoard[posX - 1][posY - 1] == null;
+                return gameBoard[posX - 1][posY + 1] == null
+                        || gameBoard[posX - 1][posY - 1] == null
+                        || gameBoard[posX - 1][posY + 1].getPlayer() != playerId
+                        || gameBoard[posX - 1][posY - 1].getPlayer() != playerId;
             } else if (posY == 0) {
-                return gameBoard[posX - 1][posY + 1] == null;
+                return gameBoard[posX - 1][posY + 1] == null
+                        || gameBoard[posX - 1][posY + 1].getPlayer() != playerId;
             } else {
-                return gameBoard[posX - 1][posY - 1] == null;
+                return gameBoard[posX - 1][posY - 1] == null
+                        || gameBoard[posX - 1][posY - 1].getPlayer() != playerId;
             }
         }
         return false;

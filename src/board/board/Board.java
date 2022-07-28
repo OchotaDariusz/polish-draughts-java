@@ -169,10 +169,11 @@ public final class Board {
                 !Pawn.isMovePossible(gameBoard, pawnCords[0], pawnCords[1], playerID)
                 || gameBoard[pawnCords[0]][pawnCords[1]] == null
         ) {
-            if ((gameBoard[pawnCords[0]][pawnCords[1]] != null
-                && gameBoard[pawnCords[0]][pawnCords[1]].getPlayer() == playerID)) {
-                break;
-            }
+//            if ((gameBoard[pawnCords[0]][pawnCords[1]] != null
+//                && gameBoard[pawnCords[0]][pawnCords[1]].getPlayer() == playerID)) {
+//                break;
+//            }
+
             System.out.println("Invalid Pawn");
             pawnCords = getUserInput("Specify pawn", size);
         }
