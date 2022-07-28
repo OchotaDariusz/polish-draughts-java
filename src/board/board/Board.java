@@ -7,7 +7,9 @@ import pawn.Pawn;
 
 import static java.lang.Integer.parseInt;
 
-public class Board {
+public final class Board {
+    private static Board instance;
+    public String value;
     private int size;
 
     public int getSize() {
@@ -22,6 +24,23 @@ public class Board {
 
     public Pawn[][] getGameBoard() {
         return gameBoard;
+    }
+
+    private Board(String value) {
+        // The following code emulates slow initialization.
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+        this.value = value;
+    }
+
+    public static Board getInstance(String value) {
+        if (instance == null) {
+            instance = new Board(value);
+        }
+        return instance;
     }
 
     public void setGameBoard() {
@@ -95,12 +114,11 @@ public class Board {
                     pawn_symbol = "W";
                 System.out.print("|");
 
-                if ( (x+y) %2 == 0)
-                {
+                if ((x + y) % 2 == 0) {
                     System.out.print(Console.Color.BLACK);
                     System.out.print(Console.Color.WHITE_BACKGROUND);
                 }
-                System.out.print(" "+ pawn_symbol + " ");
+                System.out.print(" " + pawn_symbol + " ");
                 System.out.print(Console.Color.RESET);
             }
             System.out.println("|");
