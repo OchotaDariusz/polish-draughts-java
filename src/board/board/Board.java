@@ -140,12 +140,12 @@ public final class Board {
         int posXInt = posXChar - 65;
         if (posXInt >= size) {
             System.out.println("Invalid value");
-            getUserInput(info, size);
+            return getUserInput(info, size);
         }
         int posY = parseInt(pos.substring(1));
         if (posY >= size) {
             System.out.println("Invalid value");
-            getUserInput(info, size);
+            return getUserInput(info, size);
         }
         int[] cords = new int[2];
         cords[1] = posXInt;
