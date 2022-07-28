@@ -4,7 +4,6 @@ public class Pawn {
 
     private int posX;
     private int posY;
-
     private final int playerId;
 
     Coordinates position = new Coordinates(posX, posY);

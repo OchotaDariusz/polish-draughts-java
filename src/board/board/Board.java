@@ -2,30 +2,19 @@ package board;
 
 import java.util.Scanner;
 
+import static java.lang.Integer.parseInt;
+
 import pawn.Color;
 import pawn.Pawn;
 
-import static java.lang.Integer.parseInt;
-
 public final class Board {
+
     private static Board instance;
     public String value;
     private int size;
-
-    public int getSize() {
-        return this.size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
     private Pawn[][] gameBoard;
 
-    public Pawn[][] getGameBoard() {
-        return gameBoard;
-    }
-
+    // constructor
     private Board(String value) {
         // The following code emulates slow initialization.
         try {
@@ -36,11 +25,24 @@ public final class Board {
         this.value = value;
     }
 
+    // singleton init
     public static Board getInstance(String value) {
         if (instance == null) {
             instance = new Board(value);
         }
         return instance;
+    }
+
+    public int getSize() {
+        return this.size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public Pawn[][] getGameBoard() {
+        return gameBoard;
     }
 
     public void setGameBoard() {
@@ -125,7 +127,7 @@ public final class Board {
 
     }
 
-    static int[] getUserInput(String info, int size) {
+    private static int[] getUserInput(String info, int size) {
         Scanner scan = new Scanner(System.in);
         System.out.println(info);
         String pos = scan.next().toUpperCase();
@@ -152,7 +154,7 @@ public final class Board {
         return cords;
     }
 
-    static boolean checkForEnemyPawn(Pawn[][] gameBoard, int[] moveCords, int playerID) {
+    private static boolean checkForEnemyPawn(Pawn[][] gameBoard, int[] moveCords, int playerID) {
         if (gameBoard[moveCords[0]][moveCords[1]] != null) {
             return gameBoard[moveCords[0]][moveCords[1]].getPlayer() != playerID;
         }
@@ -166,7 +168,7 @@ public final class Board {
 
         while (
                 !Pawn.isMovePossible(gameBoard, pawnCords[0], pawnCords[1], playerID)
-                || gameBoard[pawnCords[0]][pawnCords[1]] == null
+                        || gameBoard[pawnCords[0]][pawnCords[1]] == null
         ) {
             System.out.println("Invalid Pawn");
             pawnCords = getUserInput("Specify pawn", size);
