@@ -120,7 +120,7 @@ public final class Board {
                 System.out.print(" " + pawn_symbol + " ");
                 System.out.print(Console.Color.RESET);
             }
-            System.out.println("");
+            System.out.println();
         }
 
     }
@@ -168,10 +168,6 @@ public final class Board {
                 !Pawn.isMovePossible(gameBoard, pawnCords[0], pawnCords[1], playerID)
                 || gameBoard[pawnCords[0]][pawnCords[1]] == null
         ) {
-
-            System.out.println("Is move possible? " + Pawn.isMovePossible(gameBoard, pawnCords[0], pawnCords[1], playerID));
-            System.out.println("Is it null? " + gameBoard[pawnCords[0]][pawnCords[1]]);
-
             System.out.println("Invalid Pawn");
             pawnCords = getUserInput("Specify pawn", size);
         }

@@ -57,11 +57,6 @@ public class Pawn {
                 }
                 enemyCords[0] = posX + 1;
                 enemyCords[1] = posY + 1;
-                System.out.println("POS X " + posX);
-                System.out.println("POS Y " + posY);
-                System.out.println("POS X + 1 " + (posX + 1));
-                System.out.println("POS Y + 1 " + (posY + 1));
-                System.out.println(gameBoard[posX + 1][posY + 1]);
                 if (checkIsCapturePossible(gameBoard, pawnCords, enemyCords)) {  // sprawdz czy bicie mozliwe prawy dol
                     return true;
                 } else {
