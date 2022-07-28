@@ -50,72 +50,45 @@ public class Pawn {
 
         if (playerId == 0) {
             //dla pierwszego
-            if (posY > 0 && posY < gameBoard.length - 1) {
-                //ogólne pola w środku(nie skrajne)
-                if (gameBoard[posX + 1][posY + 1] == null || gameBoard[posX + 1][posY - 1] == null) { //czy pole po lewo/prawo jest puste
-                    return true; // moze sie ruszyc
-                }
-                enemyCords[0] = posX + 1;
-                enemyCords[1] = posY + 1;
-                if (checkIsCapturePossible(gameBoard, pawnCords, enemyCords)) {  // sprawdz czy bicie mozliwe prawy dol
-                    return true;
-                } else {
-                    enemyCords[0] = posX + 1;
-                    enemyCords[1] = posY - 1;
-                    return checkIsCapturePossible(gameBoard, pawnCords, enemyCords); // sprawdz czy bicie mozliwe lewy dol
-                }
-
-            } else if (posY == 0) {
-                //skrajne lewe pole
-                if (gameBoard[posX + 1][posY + 1] == null) { //czy pole po prawo jest puste
-                    return true; // moze sie ruszyc
-                }
-                enemyCords[0] = posX + 1;
-                enemyCords[1] = posY + 1;
-                return checkIsCapturePossible(gameBoard, pawnCords, enemyCords); // sprawdz czy bicie mozliwe prawy dol
-            } else {
-                //skrajne prawe pole
-                if (gameBoard[posX + 1][posY - 1] == null) { //czy pole po lewej jest puste
-                    return true; // moze sie ruszyc
-                }
-                enemyCords[0] = posX + 1;
-                enemyCords[1] = posY - 1;
-                return checkIsCapturePossible(gameBoard, pawnCords, enemyCords); // sprawdz czy bicie mozliwe lewy dol
-            }
-
+            return isMovePossibleForPlayer(posY, gameBoard, posX + 1, enemyCords, pawnCords);
         } else {
             //dla drugiego gracza
-            if (posY > 0 && posY < gameBoard.length - 1) {
-                //ogólne pola w środku(nie skrajne)
-                if (gameBoard[posX - 1][posY + 1] == null || gameBoard[posX - 1][posY - 1] == null) { //czy pole po lewo/prawo jest puste
-                    return true; // moze sie ruszyc
-                }
-                enemyCords[0] = posX - 1;
-                enemyCords[1] = posY + 1;
-                if (checkIsCapturePossible(gameBoard, pawnCords, enemyCords)) {  // sprawdz czy bicie mozliwe prawa góra
-                    return true;
-                } else {
-                    enemyCords[0] = posX - 1;
-                    enemyCords[1] = posY - 1;
-                    return checkIsCapturePossible(gameBoard, pawnCords, enemyCords); // sprawdz czy bicie mozliwe lewa góra
-                }
-            } else if (posY == 0) {
-                //skrajne lewe pole
-                if (gameBoard[posX - 1][posY + 1] == null) { //czy pole po prawo jest puste
-                    return true; // moze sie ruszyc
-                }
-                enemyCords[0] = posX - 1;
-                enemyCords[1] = posY + 1;
-                return checkIsCapturePossible(gameBoard, pawnCords, enemyCords); // sprawdz czy bicie mozliwe prawa góra
-            } else {
-                //skrajne prawe pole
-                if (gameBoard[posX - 1][posY - 1] == null) { //czy pole po lewej jest puste
-                    return true; // moze sie ruszyc
-                }
-                enemyCords[0] = posX - 1;
-                enemyCords[1] = posY - 1;
-                return checkIsCapturePossible(gameBoard, pawnCords, enemyCords); // sprawdz czy bicie mozliwe lewa góra
+            return isMovePossibleForPlayer(posY, gameBoard, posX - 1, enemyCords, pawnCords);
+        }
+    }
+
+    private static boolean isMovePossibleForPlayer(int posY, Pawn[][] gameBoard, int posX, int[] enemyCords, int[] pawnCords) {
+        if (posY > 0 && posY < gameBoard.length - 1) {
+            //ogólne pola w środku(nie skrajne)
+            if (gameBoard[posX][posY + 1] == null || gameBoard[posX][posY - 1] == null) { //czy pole po lewo/prawo jest puste
+                return true;
             }
+            enemyCords[0] = posX;
+            enemyCords[1] = posY + 1;
+            if (checkIsCapturePossible(gameBoard, pawnCords, enemyCords)) {  // sprawdz czy bicie mozliwe prawo
+                return true;
+            } else {
+                enemyCords[0] = posX;
+                enemyCords[1] = posY - 1;
+                return checkIsCapturePossible(gameBoard, pawnCords, enemyCords);
+            }
+
+        } else if (posY == 0) {
+            //skrajne lewe pole
+            if (gameBoard[posX][posY + 1] == null) { //czy pole po prawo jest puste
+                return true;
+            }
+            enemyCords[0] = posX;
+            enemyCords[1] = posY + 1;
+            return checkIsCapturePossible(gameBoard, pawnCords, enemyCords);
+        } else {
+            //skrajne prawe pole
+            if (gameBoard[posX][posY - 1] == null) { //czy pole po lewej jest puste
+                return true;
+            }
+            enemyCords[0] = posX;
+            enemyCords[1] = posY - 1;
+            return checkIsCapturePossible(gameBoard, pawnCords, enemyCords);
         }
     }
 
