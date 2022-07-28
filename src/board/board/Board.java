@@ -90,7 +90,7 @@ public final class Board {
             char col_symbol = (char) ('A' + x);
             System.out.print("  " + col_symbol + " ");
         }
-        System.out.println("");
+        System.out.println();
 
         System.out.print("   ");
         for (int x = 0; x < gameBoard[0].length; x++) {
@@ -175,8 +175,11 @@ public final class Board {
         } else {
             if (checkForEnemyPawn(gameBoard, moveCords, playerID)) {
                 // capture the pawn
-                System.out.println("Capture the Pawn"); // TODO
-                Pawn.captureThePawn(gameBoard, pawnCords, moveCords);
+                boolean captured = Pawn.checkIsCapturePossible(gameBoard, pawnCords, moveCords);
+                if (!captured) {
+                    System.out.println("You can't capture that pawn.");
+                    movePawn(playerID, gameBoard, size);
+                }
             } else {
                 System.out.println("You can't move here.");
                 movePawn(playerID, gameBoard, size);
@@ -184,7 +187,7 @@ public final class Board {
         }
     }
 
-    public Integer checkForWinner() {
+    public static Integer checkForWinner(Pawn[][] gameBoard) {
 
         Integer currentWinner = null;
         for (int y = 0; y < gameBoard.length; y++) {

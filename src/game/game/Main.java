@@ -27,8 +27,8 @@ public class Main {
         Board board = Board.getInstance("Board");
         board.setGameBoard();
         int size = board.getSize();
-        System.out.println(size);
-        System.out.println("tu by size");
+        
+        Integer winnerId = null;
 
         while (isRunning()) {
             board.displayBoard();
@@ -36,10 +36,14 @@ public class Main {
 
             Board.movePawn(getPlayerId(), board.getGameBoard(), size);
 
-            // check for win
+            winnerId = Board.checkForWinner(board.getGameBoard());
+            if (winnerId != null) {
+                setRunning(false);
+            }
+            
             int player = (getPlayerId() == 0) ? 1 : 0;
             setPlayerId(player);
         }
-
+        System.out.println("Player " + (winnerId + 1) + " won!");
     }
 }

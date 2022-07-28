@@ -2,7 +2,6 @@ package pawn;
 
 public class Pawn {
 
-    private boolean isCrowned;
     private int posX;
     private int posY;
 
@@ -45,17 +44,12 @@ public class Pawn {
         System.out.println(gameBoard[posX][posY]);
         System.out.println(posX);
         System.out.println(posY);
-        if (gameBoard[posX][posY] == null && playerId == getPlayer()) {
-            return true;
-        } else {
-            return false;
-        }
+        return gameBoard[posX][posY] == null && playerId == getPlayer();
     }
 
     @Override
     public String toString() {
         return "Pawn{" +
-                "isCrowned=" + isCrowned +
                 ", posX=" + posX +
                 ", posY=" + posY +
                 ", player_id=" + playerId +
@@ -67,12 +61,10 @@ public class Pawn {
         gameBoard[cords[0]][cords[1]] = null;
     }
 
-    public static void captureThePawn(Pawn[][] gameBoard, int[] pawnCords, int[]enemyCords) {
+    public static boolean checkIsCapturePossible(Pawn[][] gameBoard, int[] pawnCords, int[]enemyCords) {
         int id = gameBoard[pawnCords[0]][pawnCords[1]].getPlayer();
         int[] cordsAfterCapture = new int[2];
-        System.out.println("Id gracza: " + id);
 
-// coordy od 1 to literki,  od 0 to cyfry
         if (enemyCords[1] - pawnCords[1] != 1) {
             cordsAfterCapture[1] = enemyCords[1] - 1;
             if (id == 1) {
@@ -88,6 +80,14 @@ public class Pawn {
                 cordsAfterCapture[0] = enemyCords[0] + 1;
             }
         }
+        if (gameBoard[cordsAfterCapture[0]][cordsAfterCapture[1]] == null){
+            captureThePawn(gameBoard, pawnCords, enemyCords, cordsAfterCapture);
+            return true;
+        }
+        return false;
+    }
+
+    private static void captureThePawn(Pawn[][] gameBoard, int[] pawnCords, int[] enemyCords, int[] cordsAfterCapture) {
         gameBoard[cordsAfterCapture[0]][cordsAfterCapture[1]] = gameBoard[pawnCords[0]][pawnCords[1]];
         gameBoard[cordsAfterCapture[0]][cordsAfterCapture[1]].setPosX(cordsAfterCapture[1]);
         gameBoard[cordsAfterCapture[0]][cordsAfterCapture[1]].setPosY(cordsAfterCapture[0]);
