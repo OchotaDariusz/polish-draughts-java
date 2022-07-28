@@ -169,10 +169,9 @@ public final class Board {
                 !Pawn.isMovePossible(gameBoard, pawnCords[0], pawnCords[1], playerID)
                 || gameBoard[pawnCords[0]][pawnCords[1]] == null
         ) {
-//            if ((gameBoard[pawnCords[0]][pawnCords[1]] != null
-//                && gameBoard[pawnCords[0]][pawnCords[1]].getPlayer() == playerID)) {
-//                break;
-//            }
+
+            System.out.println("Is move possible? " + Pawn.isMovePossible(gameBoard, pawnCords[0], pawnCords[1], playerID));
+            System.out.println("Is it null? " + gameBoard[pawnCords[0]][pawnCords[1]]);
 
             System.out.println("Invalid Pawn");
             pawnCords = getUserInput("Specify pawn", size);
@@ -191,6 +190,8 @@ public final class Board {
         boolean canMove = gameBoard[pawnCords[0]][pawnCords[1]].tryToMakeMove(gameBoard, moveCords[0], moveCords[1], playerID);
         if (canMove) {
             gameBoard[moveCords[0]][moveCords[1]] = gameBoard[pawnCords[0]][pawnCords[1]];
+            gameBoard[moveCords[0]][moveCords[1]].setPosX(moveCords[0]);
+            gameBoard[moveCords[0]][moveCords[1]].setPosY(moveCords[1]);
             gameBoard[pawnCords[0]][pawnCords[1]] = null;
         } else {
             if (checkForEnemyPawn(gameBoard, moveCords, playerID)) {
@@ -199,6 +200,11 @@ public final class Board {
                 if (!captured) {
                     System.out.println("You can't capture that pawn");
                     movePawn(playerID, gameBoard, size);
+                } else {
+                    int[] cordsAfterCapture = new int[2];
+                    cordsAfterCapture[0] = (moveCords[0] - pawnCords[0]) * 2 + pawnCords[0];
+                    cordsAfterCapture[1] = (moveCords[1] - pawnCords[1]) * 2 + pawnCords[1];
+                    Pawn.captureThePawn(gameBoard, pawnCords, moveCords, cordsAfterCapture);
                 }
             } else {
                 System.out.println("You can't move here");

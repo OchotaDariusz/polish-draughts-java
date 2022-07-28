@@ -39,34 +39,93 @@ public class Pawn {
     }
 
     public static boolean isMovePossible(Pawn[][] gameBoard, int posX, int posY, int playerId) {
-        if (playerId == 0 && gameBoard[posX][posY] != null && gameBoard[posX][posY].getPlayer() == playerId) {
+        int[] enemyCords = new int[2];
+        int[] pawnCords = new int[2];
+        pawnCords[0] = posX;
+        pawnCords[1] = posY;
+
+        if (!checkIfPawnExistAndPlayerIsOwner(posX, posY, playerId, gameBoard)) {
+            return false;
+        }
+
+        if (playerId == 0) {
+            //dla pierwszego
             if (posY > 0 && posY < gameBoard.length - 1) {
-                return gameBoard[posX + 1][posY + 1] == null
-                        || gameBoard[posX + 1][posY - 1] == null
-                        || gameBoard[posX + 1][posY + 1].getPlayer() != playerId
-                        || gameBoard[posX + 1][posY - 1].getPlayer() != playerId;
+                //ogólne pola w środku(nie skrajne)
+                if (gameBoard[posX + 1][posY + 1] == null || gameBoard[posX + 1][posY - 1] == null) { //czy pole po lewo/prawo jest puste
+                    return true; // moze sie ruszyc
+                }
+                enemyCords[0] = posX + 1;
+                enemyCords[1] = posY + 1;
+                System.out.println("POS X " + posX);
+                System.out.println("POS Y " + posY);
+                System.out.println("POS X + 1 " + (posX + 1));
+                System.out.println("POS Y + 1 " + (posY + 1));
+                System.out.println(gameBoard[posX + 1][posY + 1]);
+                if (checkIsCapturePossible(gameBoard, pawnCords, enemyCords)) {  // sprawdz czy bicie mozliwe prawy dol
+                    return true;
+                } else {
+                    enemyCords[0] = posX + 1;
+                    enemyCords[1] = posY - 1;
+                    return checkIsCapturePossible(gameBoard, pawnCords, enemyCords); // sprawdz czy bicie mozliwe lewy dol
+                }
+
             } else if (posY == 0) {
-                return gameBoard[posX + 1][posY + 1] == null
-                        || gameBoard[posX + 1][posY + 1].getPlayer() != playerId;
+                //skrajne lewe pole
+                if (gameBoard[posX + 1][posY + 1] == null) { //czy pole po prawo jest puste
+                    return true; // moze sie ruszyc
+                }
+                enemyCords[0] = posX + 1;
+                enemyCords[1] = posY + 1;
+                return checkIsCapturePossible(gameBoard, pawnCords, enemyCords); // sprawdz czy bicie mozliwe prawy dol
             } else {
-                return gameBoard[posX + 1][posY - 1] == null
-                        || gameBoard[posX + 1][posY - 1].getPlayer() != playerId;
+                //skrajne prawe pole
+                if (gameBoard[posX + 1][posY - 1] == null) { //czy pole po lewej jest puste
+                    return true; // moze sie ruszyc
+                }
+                enemyCords[0] = posX + 1;
+                enemyCords[1] = posY - 1;
+                return checkIsCapturePossible(gameBoard, pawnCords, enemyCords); // sprawdz czy bicie mozliwe lewy dol
             }
-        } else if (gameBoard[posX][posY] != null && gameBoard[posX][posY].getPlayer() == playerId) {
+
+        } else {
+            //dla drugiego gracza
             if (posY > 0 && posY < gameBoard.length - 1) {
-                return gameBoard[posX - 1][posY + 1] == null
-                        || gameBoard[posX - 1][posY - 1] == null
-                        || gameBoard[posX - 1][posY + 1].getPlayer() != playerId
-                        || gameBoard[posX - 1][posY - 1].getPlayer() != playerId;
+                //ogólne pola w środku(nie skrajne)
+                if (gameBoard[posX - 1][posY + 1] == null || gameBoard[posX - 1][posY - 1] == null) { //czy pole po lewo/prawo jest puste
+                    return true; // moze sie ruszyc
+                }
+                enemyCords[0] = posX - 1;
+                enemyCords[1] = posY + 1;
+                if (checkIsCapturePossible(gameBoard, pawnCords, enemyCords)) {  // sprawdz czy bicie mozliwe prawa góra
+                    return true;
+                } else {
+                    enemyCords[0] = posX - 1;
+                    enemyCords[1] = posY - 1;
+                    return checkIsCapturePossible(gameBoard, pawnCords, enemyCords); // sprawdz czy bicie mozliwe lewa góra
+                }
             } else if (posY == 0) {
-                return gameBoard[posX - 1][posY + 1] == null
-                        || gameBoard[posX - 1][posY + 1].getPlayer() != playerId;
+                //skrajne lewe pole
+                if (gameBoard[posX - 1][posY + 1] == null) { //czy pole po prawo jest puste
+                    return true; // moze sie ruszyc
+                }
+                enemyCords[0] = posX - 1;
+                enemyCords[1] = posY + 1;
+                return checkIsCapturePossible(gameBoard, pawnCords, enemyCords); // sprawdz czy bicie mozliwe prawa góra
             } else {
-                return gameBoard[posX - 1][posY - 1] == null
-                        || gameBoard[posX - 1][posY - 1].getPlayer() != playerId;
+                //skrajne prawe pole
+                if (gameBoard[posX - 1][posY - 1] == null) { //czy pole po lewej jest puste
+                    return true; // moze sie ruszyc
+                }
+                enemyCords[0] = posX - 1;
+                enemyCords[1] = posY - 1;
+                return checkIsCapturePossible(gameBoard, pawnCords, enemyCords); // sprawdz czy bicie mozliwe lewa góra
             }
         }
-        return false;
+    }
+
+    private static boolean checkIfPawnExistAndPlayerIsOwner(int posX, int posY, int playerId, Pawn[][] gameBoard) {
+        return gameBoard[posX][posY] != null && gameBoard[posX][posY].getPlayer() == playerId;
     }
 
     public boolean tryToMakeMove(Pawn[][] gameBoard, int posX, int posY, int playerId) {
@@ -106,14 +165,10 @@ public class Pawn {
             return false;
         }
 
-        if (gameBoard[cordsAfterCapture[0]][cordsAfterCapture[1]] == null) {
-            captureThePawn(gameBoard, pawnCords, enemyCords, cordsAfterCapture);
-            return true;
-        }
-        return false;
+        return gameBoard[cordsAfterCapture[0]][cordsAfterCapture[1]] == null;
     }
 
-    private static void captureThePawn(Pawn[][] gameBoard, int[] pawnCords, int[] enemyCords, int[] cordsAfterCapture) {
+    public static void captureThePawn(Pawn[][] gameBoard, int[] pawnCords, int[] enemyCords, int[] cordsAfterCapture) {
         gameBoard[cordsAfterCapture[0]][cordsAfterCapture[1]] = gameBoard[pawnCords[0]][pawnCords[1]];
         gameBoard[cordsAfterCapture[0]][cordsAfterCapture[1]].setPosX(cordsAfterCapture[1]);
         gameBoard[cordsAfterCapture[0]][cordsAfterCapture[1]].setPosY(cordsAfterCapture[0]);
