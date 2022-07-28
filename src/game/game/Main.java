@@ -44,6 +44,7 @@ public class Main {
             int player = (getPlayerId() == 0) ? 1 : 0;
             setPlayerId(player);
         }
+        board.displayBoard();
         System.out.println("Player " + (winnerId + 1) + " won!");
     }
 }
