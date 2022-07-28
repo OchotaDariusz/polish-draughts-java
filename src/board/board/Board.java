@@ -176,6 +176,7 @@ public final class Board {
             if (checkForEnemyPawn(gameBoard, moveCords, playerID)) {
                 // capture the pawn
                 System.out.println("Capture the Pawn"); // TODO
+                Pawn.captureThePawn(gameBoard, pawnCords, moveCords);
             } else {
                 System.out.println("You can't move here.");
                 movePawn(playerID, gameBoard, size);

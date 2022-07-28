@@ -62,4 +62,36 @@ public class Pawn {
                 ", position=" + position +
                 '}';
     }
+
+    public static void removePawn(Pawn[][] gameBoard, int[]cords) {
+        gameBoard[cords[0]][cords[1]] = null;
+    }
+
+    public static void captureThePawn(Pawn[][] gameBoard, int[] pawnCords, int[]enemyCords) {
+        int id = gameBoard[pawnCords[0]][pawnCords[1]].getPlayer();
+        int[] cordsAfterCapture = new int[2];
+        System.out.println("Id gracza: " + id);
+
+// coordy od 1 to literki,  od 0 to cyfry
+        if (enemyCords[1] - pawnCords[1] != 1) {
+            cordsAfterCapture[1] = enemyCords[1] - 1;
+            if (id == 1) {
+                cordsAfterCapture[0] = enemyCords[0] - 1;
+            } else {
+                cordsAfterCapture[0] = enemyCords[0] + 1;
+            }
+        } else {
+            cordsAfterCapture[1] = enemyCords[1] + 1;
+            if (id == 1) {
+                cordsAfterCapture[0] = enemyCords[0] - 1;
+            } else {
+                cordsAfterCapture[0] = enemyCords[0] + 1;
+            }
+        }
+        gameBoard[cordsAfterCapture[0]][cordsAfterCapture[1]] = gameBoard[pawnCords[0]][pawnCords[1]];
+        gameBoard[cordsAfterCapture[0]][cordsAfterCapture[1]].setPosX(cordsAfterCapture[1]);
+        gameBoard[cordsAfterCapture[0]][cordsAfterCapture[1]].setPosY(cordsAfterCapture[0]);
+        gameBoard[pawnCords[0]][pawnCords[1]] = null;
+        removePawn(gameBoard, enemyCords);
+    }
 }
