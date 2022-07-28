@@ -85,16 +85,16 @@ public final class Board {
 
     public void displayBoard() {
         // display header
-        System.out.print("   ");
+        System.out.print("     ");
         for (int x = 0; x < gameBoard[0].length; x++) {
             char col_symbol = (char) ('A' + x);
-            System.out.print("  " + col_symbol + " ");
+            System.out.print(" " + col_symbol + " ");
         }
         System.out.println();
 
-        System.out.print("   ");
+        System.out.print("     ");
         for (int x = 0; x < gameBoard[0].length; x++) {
-            System.out.print("----");
+            System.out.print("---");
         }
         System.out.println("-");
 
@@ -103,7 +103,7 @@ public final class Board {
 
             if (y < 10)
                 System.out.print(" ");
-            System.out.print(y + " ");
+            System.out.print(y + " | ");
 
             for (int x = 0; x < gameBoard[0].length; x++) {
                 String pawn_symbol = " ";
@@ -112,7 +112,6 @@ public final class Board {
                     pawn_symbol = "B";
                 if (gameBoard[y][x] != null && gameBoard[y][x].getColor() == Color.WHITE)
                     pawn_symbol = "W";
-                System.out.print("|");
 
                 if ((x + y) % 2 == 0) {
                     System.out.print(Console.Color.BLACK);
@@ -121,7 +120,7 @@ public final class Board {
                 System.out.print(" " + pawn_symbol + " ");
                 System.out.print(Console.Color.RESET);
             }
-            System.out.println("|");
+            System.out.println("");
         }
 
     }
