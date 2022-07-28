@@ -38,12 +38,28 @@ public class Pawn {
         return Color.BLACK;
     }
 
+    public static boolean isMovePossible(Pawn[][] gameBoard, int posX, int posY, int playerId) {
+        if (playerId == 0 && gameBoard[posX][posY] != null && gameBoard[posX][posY].getPlayer() == playerId) {
+            if (posY > 0 && posY < gameBoard.length - 1) {
+                return gameBoard[posX + 1][posY + 1] == null || gameBoard[posX + 1][posY - 1] == null;
+            } else if (posY == 0) {
+                return gameBoard[posX + 1][posY + 1] == null;
+            } else {
+                return gameBoard[posX + 1][posY - 1] == null;
+            }
+        } else if (gameBoard[posX][posY] != null && gameBoard[posX][posY].getPlayer() == playerId) {
+            if (posY > 0 && posY < gameBoard.length - 1) {
+                return gameBoard[posX - 1][posY + 1] == null || gameBoard[posX - 1][posY - 1] == null;
+            } else if (posY == 0) {
+                return gameBoard[posX - 1][posY + 1] == null;
+            } else {
+                return gameBoard[posX - 1][posY - 1] == null;
+            }
+        }
+        return false;
+    }
+
     public boolean tryToMakeMove(Pawn[][] gameBoard, int posX, int posY, int playerId) {
-        System.out.println(playerId);
-        System.out.println(getPlayer());
-        System.out.println(gameBoard[posX][posY]);
-        System.out.println(posX);
-        System.out.println(posY);
         return gameBoard[posX][posY] == null && playerId == getPlayer();
     }
 
@@ -57,30 +73,30 @@ public class Pawn {
                 '}';
     }
 
-    public static void removePawn(Pawn[][] gameBoard, int[]cords) {
+    public static void removePawn(Pawn[][] gameBoard, int[] cords) {
         gameBoard[cords[0]][cords[1]] = null;
     }
 
-    public static boolean checkIsCapturePossible(Pawn[][] gameBoard, int[] pawnCords, int[]enemyCords) {
+    public static boolean checkIsCapturePossible(Pawn[][] gameBoard, int[] pawnCords, int[] enemyCords) {
         int id = gameBoard[pawnCords[0]][pawnCords[1]].getPlayer();
         int[] cordsAfterCapture = new int[2];
 
-        if (enemyCords[1] - pawnCords[1] != 1) {
+        if (enemyCords[1] - pawnCords[1] != 1 && enemyCords[1] > 0) {
             cordsAfterCapture[1] = enemyCords[1] - 1;
-            if (id == 1) {
-                cordsAfterCapture[0] = enemyCords[0] - 1;
-            } else {
-                cordsAfterCapture[0] = enemyCords[0] + 1;
-            }
-        } else {
+        } else if (enemyCords[1] < gameBoard.length - 1 && enemyCords[1] != 0) {
             cordsAfterCapture[1] = enemyCords[1] + 1;
-            if (id == 1) {
-                cordsAfterCapture[0] = enemyCords[0] - 1;
-            } else {
-                cordsAfterCapture[0] = enemyCords[0] + 1;
-            }
+        } else {
+            return false;
         }
-        if (gameBoard[cordsAfterCapture[0]][cordsAfterCapture[1]] == null){
+        if (id == 1 && enemyCords[0] > 0) {
+            cordsAfterCapture[0] = enemyCords[0] - 1;
+        } else if (enemyCords[0] < gameBoard.length - 1 && enemyCords[0] != 0) {
+            cordsAfterCapture[0] = enemyCords[0] + 1;
+        } else {
+            return false;
+        }
+
+        if (gameBoard[cordsAfterCapture[0]][cordsAfterCapture[1]] == null) {
             captureThePawn(gameBoard, pawnCords, enemyCords, cordsAfterCapture);
             return true;
         }
